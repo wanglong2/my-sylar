@@ -3,7 +3,4 @@ project(mySylar)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(mySylar main.cpp)
-
-
 add_subdirectory(sylar)

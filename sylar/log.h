@@ -6,6 +6,7 @@
 #include <list>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace sylar {
 // 日志事件
@@ -35,8 +36,18 @@ class LogFormatter {
  public:
   typedef std::shared_ptr<LogFormatter> ptr;
   std::string format(LogEvent::ptr event);
+private:
+  class FormatItem {
+  public:
+    typedef std::shared_ptr<FormatItem> ptr;
+    virtual ~FormatItem(){}
+    virtual std::string format(LogEvent::ptr event) = 0;
+  };
 
  private:
+  std::string m_pattern;
+  std::pmr::vector<FormatItem::ptr> m_items;
+  void init();
 };
 
 class LogAppender {
@@ -48,7 +59,7 @@ class LogAppender {
   void setFormatter(LogFormatter::ptr val) { m_formatter = val;}
   LogFormatter::ptr getFormatter() const { return m_formatter;}
 
- private:
+ protected:
   LogLevel::Level m_level;
   LogFormatter::ptr m_formatter;
 };

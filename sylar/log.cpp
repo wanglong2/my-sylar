@@ -5,6 +5,12 @@
 #include "log.h"
 
 #include <iostream>
+std::string sylar::LogFormatter::format(LogEvent::ptr event) {
+
+}
+void sylar::LogFormatter::init() {
+  
+}
 void sylar::StdOutLogAppender::log(LogLevel::Level level, LogEvent::ptr event) {
   if (level >= m_level) {
     std::cout << m_formatter->format(event);
